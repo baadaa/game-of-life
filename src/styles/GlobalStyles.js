@@ -20,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
     --hp-cold-black: #001c2c;
     --sidebar-width: 260px;
     --topbar-height: 80px;
+    --inset-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     --base-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
     --hover-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
     --container-width: 1200px;
@@ -56,7 +57,7 @@ const GlobalStyles = createGlobalStyle`
     --day-clear: var(--hp-gold);
     --night-clear: var(--hp-gold);
     --day-cloud: var(--hp-coolgray);
-    --bg: var(--hp-off-white);
+    --bg: var(--hp-coolgray);
     --sun: var(--hp-gold);
     --moon: var(--hp-gold);
     --cloud: var(--hp-medium-gray);
@@ -81,6 +82,7 @@ const GlobalStyles = createGlobalStyle`
     }
     margin: 0;
     padding: 0;
+    padding-top: 8rem;
     min-height: 100vh;
     position: relative;
   }
