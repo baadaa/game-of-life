@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import 'normalize.css';
 import Header from './header';
 import GlobalStyles from '../styles/GlobalStyles';
@@ -6,6 +7,18 @@ import GlobalStyles from '../styles/GlobalStyles';
 const Layout = ({ children }) => (
   <>
     <Header />
+    <Helmet>
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+      <title>Conway's Game of Life</title>
+      <meta
+        name="description"
+        content="Just another Game of Life exercise | B"
+      />
+    </Helmet>
     <GlobalStyles />
     <div
       style={{

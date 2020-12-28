@@ -51,6 +51,26 @@ const WrapperStyles = styled.div`
   }
   @media screen and (max-width: 620px) {
     .world {
+      width: ${gridWidth / 1.3}px;
+      height: ${gridWidth / 1.3}px;
+      flex-basis: ${gridWidth / 1.3}px;
+    }
+    .info {
+      max-width: ${gridWidth / 1.3 - 10}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .world {
+      width: ${gridWidth / 1.6}px;
+      height: ${gridWidth / 1.6}px;
+      flex-basis: ${gridWidth / 1.6}px;
+    }
+    .info {
+      max-width: ${gridWidth / 1.6 - 10}px;
+    }
+  }
+  @media screen and (max-width: 380px) {
+    .world {
       width: ${gridWidth / 1.8}px;
       height: ${gridWidth / 1.8}px;
       flex-basis: ${gridWidth / 1.8}px;
@@ -171,10 +191,22 @@ const Cell = styled.div`
   box-sizing: border-box;
   @media screen and (max-width: 620px) {
     width: ${props =>
+      props.grid ? `${(gridWidth / 1.3 - 10) / props.grid - 4}px` : '10px'};
+    height: ${props =>
+      props.grid ? `${(gridWidth / 1.3 - 10) / props.grid - 4}px` : '10px'};
+    border-radius: 2px;
+  }
+  @media screen and (max-width: 480px) {
+    width: ${props =>
+      props.grid ? `${(gridWidth / 1.6 - 10) / props.grid - 4}px` : '10px'};
+    height: ${props =>
+      props.grid ? `${(gridWidth / 1.6 - 10) / props.grid - 4}px` : '10px'};
+  }
+  @media screen and (max-width: 380px) {
+    width: ${props =>
       props.grid ? `${(gridWidth / 1.8 - 10) / props.grid - 4}px` : '10px'};
     height: ${props =>
       props.grid ? `${(gridWidth / 1.8 - 10) / props.grid - 4}px` : '10px'};
-    border-radius: 2px;
   }
 `;
 const IndexPage = () => {
@@ -319,10 +351,10 @@ const IndexPage = () => {
                 disabled={isPlaying}
                 onClick={() => randomize()}
               >
-                <RandomIcon /> Randomize
+                <RandomIcon /> Random
               </button>
               <button className="layout" type="button" onClick={() => reset()}>
-                <DeleteIcon /> Clear all
+                <DeleteIcon /> Clear
               </button>
             </div>
           </div>

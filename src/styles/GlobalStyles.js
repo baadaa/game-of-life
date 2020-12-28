@@ -82,7 +82,7 @@ const GlobalStyles = createGlobalStyle`
     }
     margin: 0;
     padding: 0;
-    padding-top: 8rem;
+    padding-top: 10rem;
     min-height: 100vh;
     position: relative;
   }
