@@ -2,6 +2,10 @@
 
 A classic cellular automaton devised by British mathematician John Conway, implemented in JavaScript. In a nut-shell, it's a zero-player game in which cells will continue to evolve and multiply based on a simple set of mathematic rules. Read more from [Wikipedia entry here](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
+### Live demo
+
+https://bald-game-of-life.netlify.app
+
 ### Built with
 
 - **Vanilla JavaScript for logic**
