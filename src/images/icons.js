@@ -3,3 +3,7 @@ export * from './playIcon';
 export * from './pauseIcon';
 export * from './randomIcon';
 export * from './deleteIcon';
+export * from './rule01';
+export * from './rule02';
+export * from './rule03';
+export * from './rule04';

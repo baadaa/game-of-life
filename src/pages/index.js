@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Layout from '../components/layout';
-import SEO from '../components/seo';
 import { useInterval } from '../hooks/useInterval';
 
 import {
@@ -18,11 +17,65 @@ import {
   RandomIcon,
   DeleteIcon,
 } from '../images/icons';
+import Explanation from '../components/Explanation';
 
 const gridWidth = 600;
 const WrapperStyles = styled.div`
   display: flex;
   font-size: 1.6rem;
+  h4 {
+    font-size: 1.5rem;
+    padding: 1rem 0;
+    span {
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      background: var(--hp-coolgray);
+      box-shadow: var(--base-shadow);
+      border-radius: 0.5rem;
+    }
+  }
+  h4 + h4 {
+    margin-left: 2rem;
+  }
+  .startPrompt {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .msg {
+      padding: 2rem;
+      animation: bgRotate 10s linear infinite;
+      box-shadow: var(--hover-shadow);
+      border-radius: 2rem;
+    }
+    ul {
+      padding-left: 2rem;
+      margin-top: 1rem;
+      margin-bottom: 0;
+    }
+  }
+  @keyframes bgRotate {
+    0% {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    25% {
+      background-color: rgba(255, 239, 204, 0.8);
+    }
+    50% {
+      background-color: rgba(218, 241, 240, 0.8);
+    }
+    75% {
+      background-color: rgba(228, 217, 242, 0.8);
+    }
+    100% {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
   .world {
     background: var(--hp-coolgray);
     width: ${gridWidth}px;
@@ -34,6 +87,24 @@ const WrapperStyles = styled.div`
     box-sizing: border-box;
     padding: 5px;
     border-radius: 5px;
+    position: relative;
+  }
+  .explanation {
+    background-color: var(--hp-legal-navy);
+    border: none;
+    border-radius: 5rem;
+    padding: 1.5rem 2rem;
+    width: 100%;
+    color: #fff;
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+      background-color: var(--hp-purple);
+    }
   }
   .info {
     flex: 1;
@@ -89,32 +160,25 @@ const WrapperStyles = styled.div`
   .status {
     display: flex;
     align-items: center;
-    h4 {
-      font-size: 1.5rem;
-      padding: 0.5rem 0;
-      span {
-        padding: 0.5rem;
-        margin-left: 0.5rem;
-        background: var(--hp-coolgray);
-        box-shadow: var(--base-shadow);
-        border-radius: 0.5rem;
-      }
-    }
-    h4 + h4 {
-      margin-left: 2rem;
-    }
+  }
+  select,
+  option {
+    width: 100%;
+  }
+  select {
+    margin-bottom: 0.5rem;
   }
   .gameControls {
     button {
       display: inline-flex;
       align-items: center;
       cursor: pointer;
-      background: #fff;
+      background: var(--hp-hot-orange);
       align-items: center;
       justify-content: center;
-      color: var(--hp-legal-navy);
-
-      border: 1px solid var(--hp-legal-navy);
+      color: #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--hp-hot-orange);
       border-radius: 3rem;
       outline: none;
       &[disabled] {
@@ -124,6 +188,7 @@ const WrapperStyles = styled.div`
       &:hover,
       &:focus {
         box-shadow: var(--hover-shadow);
+        transform: translateY(-1.5px);
       }
       &.playBack,
       &.layout {
@@ -214,6 +279,7 @@ const IndexPage = () => {
   const [gridData, setGridData] = useState([]);
   const [loadedPattern, setLoadedPattern] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isExplaining, setIsExplaining] = useState(false);
   const [generation, setGeneration] = useState(0);
   const [population, setPopulation] = useState(0);
   function setCell(e) {
@@ -273,7 +339,7 @@ const IndexPage = () => {
       setGeneration(0);
       setPopulation(pop);
       setGridData([...pattern]);
-      setIsPlaying(true);
+      // setIsPlaying(true);
     }, 0);
   }
   function evolveOneGeneration(option) {
@@ -297,7 +363,6 @@ const IndexPage = () => {
   }, 500);
   return (
     <Layout>
-      <SEO title="Home" />
       <WrapperStyles>
         <div className="world">
           {gridData.map((row, rowIndex) =>
@@ -312,6 +377,18 @@ const IndexPage = () => {
               />
             ))
           )}
+          {population === 0 && (
+            <div className="startPrompt">
+              <div className="msg">
+                <strong>To start the game: </strong>
+                <ul>
+                  <li>Manually add cells on the grid,</li>
+                  <li>Randomly generate cells, or</li>
+                  <li>load a pre-built cellular pattern</li>
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
         <div className="info">
           <div className="status dashboardSection">
@@ -323,48 +400,53 @@ const IndexPage = () => {
             </h4>
           </div>
           <div className="gameControls dashboardSection">
-            <h4>Layout Setting</h4>
             <div className="gridSizeControl">
-              Size:
+              <h4 style={{ marginRight: '1rem' }}>Grid Size:</h4>
               <button
                 type="button"
                 data-control="up"
                 disabled={isPlaying}
                 onClick={e => handleGridSize(e)}
               >
-                &#9650;
+                &#x2B;
               </button>
-              {gridSize}
+              <h4>
+                <span>{gridSize}</span>
+              </h4>
               <button
                 type="button"
                 data-control="down"
                 disabled={isPlaying}
                 onClick={e => handleGridSize(e)}
               >
-                &#9660;
+                &#x2212;
               </button>
             </div>
+          </div>
+          <div className="gameControls dashboardSection">
             <div className="gridLayoutControl">
+              <h4>Layout Control</h4>
               <button
                 type="button"
                 className="layout"
                 disabled={isPlaying}
                 onClick={() => randomize()}
               >
-                <RandomIcon /> Random
+                <RandomIcon /> Randomize
               </button>
               <button className="layout" type="button" onClick={() => reset()}>
-                <DeleteIcon /> Clear
+                <DeleteIcon /> Clear Grid
               </button>
             </div>
           </div>
           <div className="gameControls dashboardSection">
+            <h4>Load a pre-built pattern</h4>
             <select
               onChange={e => loadPattern(e)}
               value={loadedPattern}
-              // disabled={isPlaying}
+              disabled={isPlaying}
             >
-              <option value="">Choose a pattern</option>
+              <option value="">Choose...</option>
               {patterns.map(item => (
                 <option key={item.name} value={item.name}>
                   {item.name}
@@ -373,6 +455,7 @@ const IndexPage = () => {
             </select>
           </div>
           <div className="gameControls dashboardSection">
+            <h4>Playback Control</h4>
             <button
               type="button"
               className="playBack"
@@ -392,8 +475,18 @@ const IndexPage = () => {
               Next Step
             </button>
           </div>
+          <button
+            type="button"
+            className="explanation"
+            onClick={() => setIsExplaining(!isExplaining)}
+          >
+            What is <em>The Game of Life</em>?
+          </button>
         </div>
       </WrapperStyles>
+      {isExplaining && (
+        <Explanation close={() => setIsExplaining(!isExplaining)} />
+      )}
     </Layout>
   );
 };

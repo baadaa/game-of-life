@@ -16,7 +16,7 @@ export function randomizeGrid(arr) {
   for (let row = 0; row < size; row += 1) {
     newArr[row] = [];
     for (let col = 0; col < size; col += 1) {
-      const num = Math.random() > 0.5 ? 1 : 0;
+      const num = Math.random() > 0.66 ? 1 : 0;
       newArr[row].push(num);
       population += num;
     }
