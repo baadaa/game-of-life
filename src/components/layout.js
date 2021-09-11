@@ -13,7 +13,7 @@ const Layout = ({ children }) => (
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap"
         rel="stylesheet"
       />
-      <title>Conway's Game of Life</title>
+      <title>Conway's Game of Life • B</title>
       <meta
         name="description"
         content="Just another Game of Life exercise | B"
@@ -33,9 +33,9 @@ const Layout = ({ children }) => (
           marginTop: `2rem`,
         }}
       >
-        © {new Date().getFullYear()}, Built with
+        © {new Date().getFullYear()}, Implemented by
         {` `}
-        <a href="https://www.gatsbyjs.com">Gatsby</a>
+        <a href="https://bald.design">B</a>
       </footer>
     </div>
   </>
